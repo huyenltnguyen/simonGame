@@ -1,0 +1,148 @@
+body {
+	background-color: #b44853;
+	text-align: center;
+}
+
+
+.pad {
+	width: 20%;
+	padding-bottom: 20%;
+	display: inline-block;
+	border-radius: 10%;
+	margin: 0.4%;
+}
+
+
+.circle {
+	width: 15%;
+	height: 0;
+	padding-top: 2%;
+	padding-bottom: 13%;
+	border-radius: 50%;
+	background-color: #56b1f8;
+	margin-top: 12%;
+	margin-left: 41.5%;
+
+
+	border: 13px solid #fff;
+	position: absolute;
+	z-index: 1;
+}
+
+
+
+/*xs*/
+@media only screen and (max-width: 576px) {
+	.pad {
+		width: 45%;
+		padding-bottom: 45%;
+		margin: 0.4%;
+		display: inline-block;
+	}
+
+	.circle {
+		width: 25%;
+		height: 0;
+		padding-top: 5%;
+		padding-bottom: 20%;
+		border-radius: 50%;
+		border: 8px solid #fff;
+		margin-top: 30%;
+		margin-left: 35%;
+	}
+}
+
+/*sm - md*/
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+	.pad {
+		width: 40%;
+		padding-bottom: 40%;
+		margin: 0.4%;
+		display: inline-block;
+	}
+
+	.circle {
+		width: 25%;
+		height: 0;
+		padding-top: 5%;
+		padding-bottom: 20%;
+		border-radius: 50%;
+		border: 12px solid #fff;
+		margin-top: 27%;
+		margin-left: 35%;
+	}
+}
+
+
+
+.padWrapper {
+	position: absolute;
+	z-index: 0;
+	background-color: #e3e5e2;
+	text-align: center;
+	width: 100%;
+}
+
+/* PAD COLORS */
+#green {
+	background-color: #285c1b;
+}
+
+#red {
+	background-color: #c21813;
+}
+
+#yellow {
+	background-color: #d9b44c;
+}
+
+
+#blue {
+	background-color: #316c6d;
+}
+
+
+/* START BUTTON */
+#startBtn {
+	position: absolute;
+	z-index: 2;
+	width: 18%;
+	height: 0;
+	padding-top: 4.5%;  /* vertically center content */
+	padding-bottom: 13.5%;
+
+	border-radius: 50%;
+	text-align: center;
+	background-color: #add011;
+	cursor: pointer;
+}
+
+
+/* STRICT BUTTON */
+#strictBtn {
+	position: absolute;
+	z-index: 2;
+	width: 25%;
+	padding-top: 4.5%;
+	height: 13.5%;
+	margin-left: 26%;
+	border-radius: 5%;
+	background-color: #c08c70;
+	cursor: pointer;	
+}
+
+
+/* RESET BUTTON */
+#resetBtn {
+	position: absolute;
+	z-index: 2;
+	width: 18%;
+	height: 0;
+	padding-top: 4.5%;  /* vertically center content */
+	padding-bottom: 13.5%;
+	border-radius: 50%;
+	margin-left: 60%;
+	text-align: center;
+	background-color: #cc99cc;
+	cursor: pointer;
+}
