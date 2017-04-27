@@ -1,4 +1,4 @@
-// https://scottiestech.info/2014/07/01/javascript-fun-looping-with-a-delay/
+// REFERENCE: https://scottiestech.info/2014/07/01/javascript-fun-looping-with-a-delay/
 
 
 $("document").ready(function() {
@@ -14,14 +14,14 @@ $("document").ready(function() {
 	var lightOn = {
 		"green": "#7ec66b",
 		"red": "#f64d48",
-		"yellow": "#fad553",
+		"yellow": "#fad560",
 		"blue": "#5eb5b6",
 	};
 
 	var lightOff = {
 		"green": "#285c1b",
-		"red": "#c21813",
-		"yellow": "#d9b44c",
+		"red": "#ae1511",
+		"yellow": "#d0ae48",
 		"blue": "#316c6d",
 	};
 
@@ -30,6 +30,7 @@ $("document").ready(function() {
 	var playerInput = [];
 	var pattern = [];
 	var clickablePad = false;
+	var startBtnAvail = true;
 	var strictMode = false;
 	var wrongInput = false;
 	
@@ -52,8 +53,11 @@ $("document").ready(function() {
 
 	// start game when Start Button is clicked
 	$("#startBtn").on("click", function() {
-		updateStep();
-		startPattern();
+		if (startBtnAvail) {
+			startBtnAvail = false; // disable the START button when it's clicked
+			updateStep();
+			startPattern();			
+		}		
 	});
 
 
@@ -82,6 +86,7 @@ $("document").ready(function() {
 		strictMode = false;
 		wrongInput = false;
 		clickablePad = false;
+		startBtnAvail = true;
 		$(".pad").css("cursor", "initial");			
 	}
 
@@ -91,9 +96,9 @@ $("document").ready(function() {
 	function updateStep() {
 		if (step < 20) {
 			step++;
-			$(".circle h3").text(step + "/20");
+			$("#secondRow h3").text(step + "/20");
 		} else {
-			$(".circle h3").text("You made it!");
+			$("#secondRow h3").text("You made it!");
 		}		
 	}
 
