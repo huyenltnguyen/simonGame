@@ -7,40 +7,35 @@
 
 	<link rel="stylesheet" href="style.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!-- 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 	<script type="text/javascript" src="script.js"></script>
-	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 	<title>Simon Game</title>
 </head>
 
-<body>
-
+<body class="container">
 	<div class="wrapper">
-		<div class="padWrapper">
-			<div>
-				<div class="pad lightOff" id="green"></div>
-				<div class="pad lightOff" id="red"></div>
-			</div>
-			
-			<div>
-				<div class="pad lightOff" id="yellow"></div>
-				<div class="pad lightOff" id="blue"></div>
-			</div>
+		<div>
+			<div class="pad lightOff" id="green"></div>
 		</div>
 
-		<div class="circle">
+		<div id="secondRow">
+			<div class="pad lightOff" id="red"></div>
 			<h3>0/20</h3>
-			<div id="startBtn"><i class="fa fa-play"></i></div>
-			<div id="strictBtn" class="strictOff">Strict</div>
-			<div id="resetBtn"><i class="fa fa-repeat"></i></div>	
+			<div class="pad lightOff" id="yellow"></div>
 		</div>
-		
 
+		<div id="thirdRow">
+			<div class="pad lightOff" id="blue"></div>
+		</div>
+
+		<div id="btnRow">
+			<div id="startBtn" class="btn"><i class="fa fa-play"></i></div>
+			<div id="strictBtn" class="btn strictOff">STRICT</div>
+			<div id="resetBtn" class="btn"><i class="fa fa-repeat"></i></div>
+		</div>
 	</div>
-
-
-
 </body>
 </html>
