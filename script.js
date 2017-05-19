@@ -99,6 +99,10 @@ $("document").ready(function() {
 			$("#secondRow h3").text(step + "/20");
 		} else {
 			$("#secondRow h3").text("You made it!");
+			setTimeout(function() {
+				reset();
+				$("#secondRow h3").text("0/20");
+		      	}, 2000);
 		}		
 	}
 
