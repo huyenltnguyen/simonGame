@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-    <meta name="description" content="$1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="description" content="$1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script type="text/javascript" src="script.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 
-	<title>Simon Game</title>
+  <!-- CUSTOM STYLE -->
+  <link rel="stylesheet" href="style.css">
+
+
+
+  <title>Simon Game</title>
 </head>
 
-<body class="container">
-	<div class="wrapper">
-		<div>
-			<div class="pad lightOff" id="green"></div>
-		</div>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Simon Game</h1>
+    </header>
 
-		<div id="secondRow">
-			<div class="pad lightOff" id="red"></div>
-			<h3>0/20</h3>
-			<div class="pad lightOff" id="yellow"></div>
-		</div>
+    <div class="container">
+        <div class="pad-wrapper">
+          <div class="pad lightOff" id="green"></div>
+        </div>
+        <div class="pad-wrapper">
+          <div class="pad lightOff" id="red"></div>
+        </div>
+        <div class="pad-wrapper">
+          <div class="pad lightOff" id="yellow"></div>
+        </div>
+        <div class="pad-wrapper">
+          <div class="pad lightOff" id="blue"></div>
+        </div>
 
-		<div id="thirdRow">
-			<div class="pad lightOff" id="blue"></div>
-		</div>
 
-		<div id="btnRow">
-			<div id="startBtn" class="btn"><i class="fa fa-play"></i></div>
-			<div id="strictBtn" class="btn strictOff">STRICT</div>
-			<div id="resetBtn" class="btn"><i class="fa fa-repeat"></i></div>
-		</div>
-	</div>
+      <div class="btn-board">
+        <h2>0/20</h2>
+        <button id="startBtn">Start</button>
+        <button id="strictBtn">Strict</button>
+      </div>
+    </div>
+
+    <footer>
+      <h3>Created by Huyen Nguyen</h3>
+    </footer>
+
+  </div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
