@@ -12,10 +12,10 @@ $("document").ready(function() {
   };
 
   var lightOn = {
-    "green": "#7ec66b",
-    "red": "#f64d48",
-    "yellow": "#fad560",
-    "blue": "#5eb5b6",
+    "green": "#8acb79",
+    "red": "#f65e5a",
+    "yellow": "#fad96f",
+    "blue": "#6ebcbd",
   };
 
   var lightOff = {
@@ -68,7 +68,7 @@ $("document").ready(function() {
     $(this).toggleClass("strictOff strictOn");
 
     if (strictMode === true) {
-      $(this).css({ "border": "2px solid #222", "color": "#222"});
+      $(this).css({ "border": "2px solid #dbd5c5", "color": "#dbd5c5"});
     } else {
       $(this).css({ "border": "none", "color": "#999" });
     }
@@ -94,6 +94,9 @@ $("document").ready(function() {
     if (step < 9) {
       step++;
       $("h2").text("0" + step + "/20");
+      if ($("h2").text !== "0/20") {
+        $("h2").css('color', '#e5e5e5');
+      }
     } else if (step >= 9 && step < 20) {
       step++;
       $("h2").text(step + "/20");
