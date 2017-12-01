@@ -1,227 +1,211 @@
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #dbd5c5;
-  color: #222;
-  font-family: 'Arvo', serif;
-  text-align: center;
-}
-
-.wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-h1 {
-  margin-bottom: 30px;
-}
-
-h3 {
-  font-size: 17px;
-  margin-top: 30px;
-}
-
-/*==================*/
-/*     DISC    */
-/*==================*/
-
-.container {
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background-color: #333;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 20px;
-  position: relative;
-  box-shadow: 3px 4px 4px 3px rgba(0, 0, 0, .2);
-}
-
-/*==================*/
- /*   COLOR PADS  */
-/*==================*/
-.pad-wrapper {
-  width: 230px;   /* = container's (width - padding * 2) / 2 */
-  height: 230px;
-  box-sizing: border-box;
-  display: inline-block;
-  float: left;
-}
-
-.pad-wrapper:nth-child(1) {   /* green */
-  padding: 0 10px 10px 0;
-}
-
-.pad-wrapper:nth-child(2) {   /* red */
-  padding: 0 0 10px 10px;
-}
-
-.pad-wrapper:nth-child(3) {   /* yellow */
-  padding: 10px 10px 0 0;
-}
-
-.pad-wrapper:nth-child(4) {   /* blue */
-  padding: 10px 0 0 10px;
-}
-
-.pad {
-  width: 100%;
-  height: 100%;
-}
+// REFERENCE: https://scottiestech.info/2014/07/01/javascript-fun-looping-with-a-delay/
 
 
-#green {
-  background-color: #285c1b;
-  border-top-left-radius: 500px; /* = container's width */
-}
+$("document").ready(function() {
 
-#red {
-  background-color: #ae1511;
-  border-top-right-radius: 500px;
-}
+  var sounds = {
+    "green": new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"),
+    "red": new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"),
+    "yellow": new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"),
+    "blue": new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"),
+    "wrong": new Audio("http://www.orangefreesounds.com/wp-content/uploads/2015/08/Error-sound-effect.mp3")
+  };
 
-#yellow {
-  background-color: #d0ae48;
-  border-bottom-left-radius: 500px;
-}
+  var lightOn = {
+    "green": "#8acb79",
+    "red": "#f65e5a",
+    "yellow": "#fad96f",
+    "blue": "#6ebcbd",
+  };
 
-#blue {
-  background-color: #316c6d;
-  border-bottom-right-radius: 500px;
-}
+  var lightOff = {
+    "green": "#285c1b",
+    "red": "#ae1511",
+    "yellow": "#d0ae48",
+    "blue": "#316c6d",
+  };
 
-/*==================*/
- /*   BUTTON BOARD  */
-/*==================*/
-.btn-board {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background-color: #333;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 3px 4px 4px 3px rgba(0, 0, 0, .2);
-}
+  var step = 0;
+  var count = 1;
+  var playerInput = [];
+  var pattern = [];
+  var clickablePad = false;
+  var strictMode = false;
+  var wrongInput = false;
 
-h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: #999;
-  font-size: 32px;
-}
+  // pad event handler
+  $(".pad").on("click", function() {
+    if (clickablePad) {
+      var padID = $(this).attr("id");
+      playerInput.push(padID);
 
-button {
-  width: 120px;
-  height: 50px;
-  display: block;
-  font-size: 24px;
-  cursor: pointer;
-  color: #999;
-  font-family: 'Arvo', serif;
-  box-sizing: border-box;
+      checkPlayerInput();
+      switchLight(padID);
 
-}
+      wrongInput ? sounds["wrong"].play() : sounds[padID].play();
+    }
 
-button:hover {
-  color: #dbd5c5;
-}
+  });
 
-#startBtn {
-  background-color: transparent;
-  border: none;
-  margin-bottom: 8px;
-}
 
-#strictBtn {
-  background-color: transparent;
-  border: none;
-  border-radius: 24px;
-}
+  // start game when Start Button is clicked
+  $("#startBtn").on("click", function() {
+    $(this).text("Restart");  // change text to Restart
 
-/*==================*/
-/*  MEDIA QUERIES  */
-/*==================*/
-@media screen and (max-width: 500px) {
-  .container {
-    width: 320px;
-    height: 320px;
-    padding: 12px;
+    if (step !== 0) {
+      reset();
+      strictMode = false;
+    }
+
+    updateStep();
+    startPattern();
+  });
+
+
+  // switch Strict mode when the Strict Button is clicked
+  $("#strictBtn").on("click", function() {
+    strictMode = !strictMode;
+    $(this).toggleClass("strictOff strictOn");
+
+    if (strictMode === true) {
+      $(this).css({ "border": "2px solid #dbd5c5", "color": "#dbd5c5"});
+    } else {
+      $(this).css({ "border": "none", "color": "#999" });
+    }
+    console.log("strict mode: " + strictMode);
+  });
+
+  // reset function
+  function reset() {
+    step = 0;
+    count = 1;
+    playerInput = [];
+    pattern = [];
+    strictMode = false;
+    wrongInput = false;
+    clickablePad = false;
+    $(".pad").css("cursor", "initial");
   }
 
-  .pad-wrapper {
-    width: 148px;
-    height: 148px;
+
+  // increase step by 1 and update its display every time the function is called
+  // if step < 20, keep going. It step is > 20, announce that the player has won
+  function updateStep() {
+    if (step < 9) {
+      step++;
+      $("h2").text("0" + step + "/20");
+      if ($("h2").text !== "0/20") {
+        $("h2").css('color', '#e5e5e5');
+      }
+    } else if (step >= 9 && step < 20) {
+      step++;
+      $("h2").text(step + "/20");
+    } else {
+      $("h2").text("You made it!");
+    }
   }
 
-  .pad-wrapper:nth-child(1) {   /* green */
-    padding: 0 5px 5px 0;
+
+
+  function playSound() {
+    var i = 0;
+    var key = pattern[i];
+    clickablePad = false;     // make pad unclickable
+
+    (function theLoop(i) {
+      setTimeout(function() {
+        sounds[key].play();
+        switchLight(key);
+
+        if (i < pattern.length - 1) {
+            i++;  // If i < pattern' length, keep going
+            key = pattern[i];
+            theLoop(i);       // Call the loop again, and pass it the new value of i
+        } else {
+          // after the pattern has finished playing, make tha pads clickable
+          clickablePad = true;
+          $(".pad").css("cursor", "pointer");
+        }
+      }, 800);
+    })(0);
   }
 
-  .pad-wrapper:nth-child(2) {   /* red */
-    padding: 0 0 5px 5px;
+
+  function switchLight(key) {
+    $("#" + key).css("backgroundColor", lightOn[key]);
+
+    setTimeout(function() {
+      $("#" + key).css("backgroundColor", lightOff[key]);
+    }, 600);
   }
 
-  .pad-wrapper:nth-child(3) {   /* yellow */
-    padding: 5px 5px 0 0;
+
+  // choose random pad
+  function generatePattern() {
+    var arr = ["green", "red", "yellow", "blue"];
+    var random = Math.floor( Math.random() * 4);
+
+    pattern.push(arr[random]);
+    console.log(pattern);
   }
 
-  .pad-wrapper:nth-child(4) {   /* blue */
-    padding: 5px 0 0 5px;
+
+  // start running a pattern of buttons
+  function startPattern() {
+    while (count <= step && step <= 20 ) {  // stop at step 20
+      generatePattern();
+      playSound();
+      playerInput = [];
+      count++;
+    }
   }
 
-  #green {
-    border-top-left-radius: 320px; /* = container's width */
+
+  // pass in a function and delay duration to solve the "setTimeout in loop" problem
+  function delay(func, time) {
+    setTimeout(function() {
+      func();
+    }, time);
   }
 
-  #red {
-    border-top-right-radius: 320px;
+
+  // check player input
+  function checkPlayerInput() {
+    for (var i = 0; i < playerInput.length; i++) {
+      // if player clicks the wrong pad and strict mode is ON, start the game over
+      if (playerInput[i] !== pattern[i]) {
+        wrongInput = true; // switch this variable to disable the sound of the incorrect pad
+
+        if (strictMode) {
+          console.log("Strict mode ON & wrong input: " + playerInput);
+          delay(reset, 1000);
+          delay(updateStep, 1000);
+          delay(startPattern, 1000);
+          return;
+        }
+        // if player clicks wrong pad and strict mode is OFF, replay the pattern
+        else {
+          console.log("Strict mode OFF & wrong input: " + playerInput);
+          playerInput = [];
+          clickablePad = false;
+          $(".pad").css("cursor", "initial");
+          delay(playSound, 1000);
+          return;
+        }
+
+      }
+    }
+
+    wrongInput = false; // switch back to false to enable the sound of the correct pad
+
+    // if player input correctly, move up 1 step
+    if (playerInput.length === pattern.length) {
+      console.log("correct input");
+      clickablePad = false;
+      $(".pad").css("cursor", "initial");
+      delay(updateStep, 1000);
+      delay(startPattern, 1000);
+    }
   }
 
-  #yellow {
-    border-bottom-left-radius: 320px;
-  }
-
-  #blue {
-    border-bottom-right-radius: 320px;
-  }
-
-  .btn-board {
-    width: 170px;
-    height: 170px;
-  }
-
-  h2 {
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-
-  button {
-    font-size: 18px;
-    width: 76px;
-    height: 30px;
-  }
-
-  #startBtn {
-    margin-bottom: 16px;
-  }
-}
-
-
-
-/* Hide header and footer */
-header,
-footer {
-    display: none;
-}
+});
